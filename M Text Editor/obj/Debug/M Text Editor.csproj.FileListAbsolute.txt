@@ -1,0 +1,10 @@
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\bin\Debug\M Text Editor.exe.config
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\bin\Debug\M Text Editor.exe
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\bin\Debug\M Text Editor.pdb
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M Text Editor.csprojAssemblyReference.cache
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M_Text_Editor.Form1.resources
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M_Text_Editor.Properties.Resources.resources
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M Text Editor.csproj.GenerateResource.cache
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M Text Editor.csproj.CoreCompileInputs.cache
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M Text Editor.exe
+C:\Users\varas\source\repos\M Text Editor\M Text Editor\obj\Debug\M Text Editor.pdb
