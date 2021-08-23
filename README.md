@@ -2,7 +2,7 @@
 A light weight text editor created with C# (WFA) 
 
 ### App screenshots
-#### Initail View
+#### Initial View
 ![](https://raw.githubusercontent.com/Manoj-Paramsetti/M-Text-Editor-CSharp/main/App%20Screenshot/Screenshot_127.png)
 #### File options
 ![](https://raw.githubusercontent.com/Manoj-Paramsetti/M-Text-Editor-CSharp/main/App%20Screenshot/Screenshot_128.png)
