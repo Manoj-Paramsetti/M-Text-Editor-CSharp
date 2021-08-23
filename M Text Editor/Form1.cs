@@ -8,13 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Documents;
+using Microsoft.VisualBasic;
 
 namespace M_Text_Editor
 {
     public partial class Form1 : Form
     {
-        String file;
+        String file = "";
         String filelines;
+        String formName = "Untitled - M Text Editor";
         public Form1()
         {
             InitializeComponent();
@@ -23,8 +26,8 @@ namespace M_Text_Editor
         private void Form1_Resize(object sender, EventArgs e)
         {
             Console.WriteLine("resized"+e);
-            textArea.Width = this.Width;
-            textArea.Height = this.Height;
+            textArea.Width = this.Width - 18;
+            textArea.Height = this.Height - 66;
         }
 
         private void openFile() {
@@ -38,9 +41,12 @@ namespace M_Text_Editor
                 String text = _file.ReadLine();
                 textArea.Text = "";
                 filelines = "";
+                formName = file + " - M Text Editor";
+                this.Text = formName;
+                
                 while (text != null)
                 {
-                    filelines += text + Environment.NewLine;
+                    filelines += text + "\r\n";
                     text = _file.ReadLine();
                 }
                 textArea.Text = filelines;
@@ -50,7 +56,7 @@ namespace M_Text_Editor
         }
 
         private void saveFile() {
-            if (file != null)
+            if (file != "")
             {
                 File.WriteAllLines(file, textArea.Text.Split(Environment.NewLine.ToCharArray()));
             }
@@ -61,6 +67,8 @@ namespace M_Text_Editor
                 if (saveFileDialog1.FileName != "")
                 {
                     File.WriteAllLines(saveFileDialog1.FileName, textArea.Text.Split(Environment.NewLine.ToCharArray()));
+                    formName = saveFileDialog1.FileName + " - M Text Editor";
+                    this.Text = formName;
                 }
             }
         }
@@ -99,30 +107,7 @@ namespace M_Text_Editor
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (filelines != null)
-            {
-                String tss = textArea.Text;
-                if (!(textArea.Text.Contains(filelines)))
-                {
-                    string message = "It is recommended to save everytime. Do you want to save?";
-                    string caption = "About M Text Editor";
-                    MessageBoxButtons _buttons = MessageBoxButtons.YesNo;
-                    var result = MessageBox.Show(message, caption, _buttons);
-                    if (result == DialogResult.Yes)
-                    {
-                        saveFile();
-                        this.Close();
-                    }
-                }
-                else
-                {
-                    this.Close();
-                }
-
-            }
-            else {
-                saveFile();
-            }
+            this.Close();
         }
 
         private void changeFontToolStripMenuItem_Click(object sender, EventArgs e)
@@ -173,15 +158,105 @@ namespace M_Text_Editor
             var currentSize = textArea.Font.Size;
             currentSize -= 2.0F;
             textArea.Font = new Font(textArea.Font.Name, currentSize, textArea.Font.Style, textArea.Font.Unit);
-
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Text = formName;
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void aboutCreatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string message = "This app is created by Manoj Paramsetti\n\nVersion 1.0.1";
-            string caption = "About M Text Editor";
-            //MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            //Form about = new Form();
+            string message = "   This app is created by Manoj Paramsetti\n\n" +
+                             "                           Version 1.0.1";
+            string caption = "About - M Text Editor";
+
             var result = MessageBox.Show(message, caption);
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Manoj-Paramsetti/M-Text-Editor-CSharp/wiki");
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textArea.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textArea.Redo();
+        }
+
+        private void Form1_Leave(object sender, EventArgs e)
+        {
+            exitToolStripMenuItem_Click(sender, e);
+        }
+
+        private void newWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form newform = new Form1();
+            newform.Show();
+        }
+
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (filelines != null)
+            {
+                var first = filelines;
+                var second = textArea.Text;
+                if (!(second.Equals(first)))
+                {
+                    string message = "It is recommended to save everytime. Do you want to save?";
+                    string caption = "Exit";
+                    MessageBoxButtons _buttons = MessageBoxButtons.YesNoCancel;
+                    var result = MessageBox.Show(message, caption, _buttons);
+                    if (result == DialogResult.Yes)
+                    {
+                        saveFile();
+                        e.Cancel = false;
+                        result = DialogResult.No;
+                    }
+
+                    else if (result == DialogResult.Cancel)
+                    {
+                        e.Cancel = (result == DialogResult.Cancel);
+                    }        
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+            else if (file == "" && textArea.Text != null)
+            {
+
+                string message = "It's recommended to save everytime. Do you want to save?";
+                string caption = "Exit";
+                MessageBoxButtons _buttons = MessageBoxButtons.YesNoCancel;
+                var result = MessageBox.Show(message, caption, _buttons);
+                if (result == DialogResult.Yes)
+                {
+                    saveFile();
+                    e.Cancel = false;
+                    result = DialogResult.No;
+                }
+
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = (result == DialogResult.Cancel);
+                }
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
     }
 }
